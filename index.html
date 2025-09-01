@@ -43,8 +43,8 @@
 
     async function initAuth0() {
       auth0 = await createAuth0Client({
-        domain: "TON_DOMAINE.auth0.com", // ← Remplace par ton domaine Auth0
-        client_id: "TON_CLIENT_ID"       // ← Remplace par ton client ID
+        domain: "dev-580fkbolt24woc4k.us.auth0.com", // ← Remplace par ton domaine Auth0
+        client_id: "ENUuw9mX7hKGsElIvlyLj5LJR7tyxi7E"       // ← Remplace par ton client ID
       });
 
       const isAuthenticated = await auth0.isAuthenticated();
