@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Jeu de Pièces Auth0 + BitLabs</title>
+  <title>Jeu Auth0 + BitLabs</title>
   <script src="https://cdn.auth0.com/js/auth0-spa-js/1.22/auth0-spa-js.production.js"></script>
   <style>
     body {
@@ -30,12 +30,20 @@
       margin-top: 30px;
       display: none;
     }
+    #login, #logout {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <h1>🪙 Chasseur de Pièces</h1>
-  <div id="score">Score : 0</div>
-  <a id="bitlabs" target="_blank">🎁 Gagne des pièces avec BitLabs</a>
+  <button id="login">Se connecter</button>
+  <button id="logout" style="display:none;">Se déconnecter</button>
+  <div id="score" style="display:none;">Score : 0</div>
+  <a id="bitlabs" target="_blank" style="display:none;">🎁 Gagne des pièces avec BitLabs</a>
 
   <script>
     let auth0 = null;
@@ -43,28 +51,36 @@
 
     async function initAuth0() {
       auth0 = await createAuth0Client({
-        domain: "dev-580fkbolt24woc4k.us.auth0.com", // ← Remplace par ton domaine Auth0
-        client_id: "ENUuw9mX7hKGsElIvlyLj5LJR7tyxi7E"       // ← Remplace par ton client ID
+        domain: "dev-580fkbolt24woc4k.us.auth0.com",      // ← Remplace par ton domaine Auth0
+        client_id: "ENUuw9mX7hKGsElIvlyLj5LJR7tyxi7E",           // ← Remplace par ton client ID
+        redirect_uri: window.location.origin
       });
 
-      const isAuthenticated = await auth0.isAuthenticated();
+      const query = window.location.search;
+      if (query.includes("code=") && query.includes("state=")) {
+        await auth0.handleRedirectCallback();
+        window.history.replaceState({}, document.title, "/");
+      }
 
-      if (!isAuthenticated) {
-        await auth0.loginWithRedirect();
-      } else {
+      const isAuthenticated = await auth0.isAuthenticated();
+      if (isAuthenticated) {
         const user = await auth0.getUser();
         const userId = user.sub;
-        console.log("Connecté en tant que :", userId);
 
-        // Affiche le lien BitLabs avec l'ID utilisateur
+        document.getElementById("login").style.display = "none";
+        document.getElementById("logout").style.display = "inline-block";
+        document.getElementById("score").style.display = "block";
+
         const bitlabsLink = document.getElementById("bitlabs");
         bitlabsLink.href = `https://web.bitlabs.ai/surveys?uid=${userId}`;
         bitlabsLink.style.display = "inline-block";
 
-        // Lance le jeu
         spawnCoin();
       }
     }
+
+    document.getElementById("login").onclick = () => auth0.loginWithRedirect();
+    document.getElementById("logout").onclick = () => auth0.logout({ returnTo: window.location.origin });
 
     function spawnCoin() {
       const coin = document.createElement('div');
