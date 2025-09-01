@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Jeu de Pièces Auth0 + BitLabs</title>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.22/auth0-spa-js.production.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #1e1e1e;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+    .coin {
+      width: 40px;
+      height: 40px;
+      background: gold;
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: 0 0 10px #ff0;
+      cursor: pointer;
+    }
+    #score {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+    #bitlabs {
+      margin-top: 30px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🪙 Chasseur de Pièces</h1>
+  <div id="score">Score : 0</div>
+  <a id="bitlabs" target="_blank">🎁 Gagne des pièces avec BitLabs</a>
+
+  <script>
+    let auth0 = null;
+    let score = 0;
+
+    async function initAuth0() {
+      auth0 = await createAuth0Client({
+        domain: "TON_DOMAINE.auth0.com", // ← Remplace par ton domaine Auth0
+        client_id: "TON_CLIENT_ID"       // ← Remplace par ton client ID
+      });
+
+      const isAuthenticated = await auth0.isAuthenticated();
+
+      if (!isAuthenticated) {
+        await auth0.loginWithRedirect();
+      } else {
+        const user = await auth0.getUser();
+        const userId = user.sub;
+        console.log("Connecté en tant que :", userId);
+
+        // Affiche le lien BitLabs avec l'ID utilisateur
+        const bitlabsLink = document.getElementById("bitlabs");
+        bitlabsLink.href = `https://web.bitlabs.ai/surveys?uid=${userId}`;
+        bitlabsLink.style.display = "inline-block";
+
+        // Lance le jeu
+        spawnCoin();
+      }
+    }
+
+    function spawnCoin() {
+      const coin = document.createElement('div');
+      coin.className = 'coin';
+      coin.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+      coin.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+
+      coin.onclick = () => {
+        score++;
+        document.getElementById('score').textContent = 'Score : ' + score;
+        coin.remove();
+        spawnCoin();
+      };
+
+      document.body.appendChild(coin);
+    }
+
+    window.onload = initAuth0;
+  </script>
+</body>
+</html>
