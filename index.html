@@ -77,4 +77,434 @@
         }
         .layout {
             display: grid;
-            grid-template-columns
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+            gap: 20px;
+        }
+        @media (max-width: 780px) {
+            .layout {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+        .panel {
+            background: rgba(15, 23, 42, 0.96);
+            border-radius: 16px;
+            padding: 18px 18px 20px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow:
+                0 18px 35px rgba(15, 23, 42, 0.9),
+                0 0 40px rgba(56, 189, 248, 0.12);
+        }
+        .panel-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+        .panel-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 14px;
+        }
+        .survey-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .survey-card {
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%);
+            border-radius: 12px;
+            padding: 12px 13px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease, background 0.1s ease;
+            display: grid;
+            grid-template-columns: minmax(0, 1.8fr) auto;
+            gap: 8px;
+        }
+        .survey-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.8);
+            border-color: #38bdf8;
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 60%);
+        }
+        .survey-card.inactive {
+            opacity: 0.5;
+            cursor: default;
+            filter: grayscale(0.4);
+        }
+        .survey-main {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .survey-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .survey-desc {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 2px;
+        }
+        .tag {
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            color: #e5e7eb;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+        .tag.green {
+            border-color: #22c55e;
+            color: #bbf7d0;
+        }
+        .tag.purple {
+            border-color: #a855f7;
+            color: #e9d5ff;
+        }
+        .tag.blue {
+            border-color: #38bdf8;
+            color: #bae6fd;
+        }
+        .survey-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 6px;
+        }
+        .reward {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .reward-label {
+            font-size: 10px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+        }
+        .reward-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #22c55e;
+        }
+        .status {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            border: 1px solid;
+        }
+        .status.pending {
+            border-color: #38bdf8;
+            color: #bae6fd;
+        }
+        .status.done {
+            border-color: #22c55e;
+            color: #bbf7d0;
+        }
+        .survey-detail-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .survey-detail-meta {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-bottom: 12px;
+        }
+        .question {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(75, 85, 99, 0.8);
+        }
+        .question-label {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        .question-input {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid rgba(55, 65, 81, 0.9);
+            background: rgba(15, 23, 42, 0.95);
+            color: #e5e7eb;
+            font-size: 12px;
+            padding: 6px 8px;
+        }
+        .question-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            gap: 8px;
+        }
+        .btn {
+            border-radius: 999px;
+            border: none;
+            font-size: 12px;
+            padding: 8px 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #02120a;
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.4);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: default;
+            box-shadow: none;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: #9ca3af;
+            border: 1px solid rgba(75, 85, 99, 0.9);
+        }
+        .hint {
+            font-size: 11px;
+            color: #6b7280;
+        }
+        .footer {
+            margin-top: 18px;
+            font-size: 11px;
+            color: #6b7280;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .footer span.highlight {
+            color: #e5e7eb;
+        }
+        .pill {
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="header">
+        <div class="logo">
+            <div class="logo-title"><span>Swan</span>Labs</div>
+            <div class="logo-sub">Collecte de données inutiles depuis 2026</div>
+        </div>
+        <div class="coins">
+            <div>
+                <div class="coin-label">SwanCoins</div>
+                <div class="coin-value" id="coinValue">0</div>
+            </div>
+            <div class="badge">Mode parodie • Offline</div>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="panel">
+            <div class="panel-title">Centre d’enquêtes</div>
+            <div class="panel-subtitle">
+                Choisis une enquête inutile. Tes réponses ne seront analysées par absolument personne.
+            </div>
+            <div class="survey-list" id="surveyList"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">Détails SwanLabs</div>
+            <div class="panel-subtitle" id="surveyIntro">
+                Sélectionne une enquête à gauche pour commencer ton voyage scientifique parfaitement inutile.
+            </div>
+            <div id="surveyDetail"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>
+            <span class="highlight">SwanLabs™</span> est une parodie de plateformes d’enquêtes.
+            Aucune donnée réelle n’est envoyée nulle part.
+        </div>
+        <div class="pill">Build: Local HTML • No tracking • Just vibes</div>
+    </div>
+</div>
+
+<script>
+    const surveys = [
+        {
+            id: 1,
+            titre: "Analyse du cerveau en mode avion",
+            description: "Enquête cruciale pour comprendre pourquoi tu actives le mode avion même au sol.",
+            categorie: "Psychologie du chaos",
+            tags: ["psychologie", "absurde", "court"],
+            questions: [
+                "Quand tu actives le mode avion, te sens-tu plus léger ?",
+                "As-tu déjà activé le mode avion juste pour voir ?",
+                "Penses-tu que ton téléphone peut vraiment voler ?"
+            ],
+            recompense: 15
+        },
+        {
+            id: 2,
+            titre: "DuckOS Data Collection v0.0.2",
+            description: "Étude très sérieuse sur l’impact psychologique de coin.exe sur les utilisateurs.",
+            categorie: "DuckOS Research",
+            tags: ["duckos", "expérimental", "moyen"],
+            questions: [
+                "As-tu déjà entendu coin.mp3 dans ta tête sans raison ?",
+                "Si coin.exe se lançait tout seul, que ferais-tu en premier ?",
+                "Sur une échelle de 1 à 10, à quel point as-tu peur de ton propre OS ?"
+            ],
+            recompense: 25
+        },
+        {
+            id: 3,
+            titre: "Étude sur les gens qui parlent aux objets",
+            description: "Recherche fondamentale sur le lien émotionnel entre toi et ta chaise.",
+            categorie: "Sciences sociales douteuses",
+            tags: ["sociologie", "objectophilie", "long"],
+            questions: [
+                "As-tu déjà dit « pardon » à un objet inanimé ?",
+                "As-tu déjà insulté ton PC à voix haute ?",
+                "Penses-tu que ta chaise te juge quand tu t’assois ?",
+                "Te sens-tu mal quand tu jettes un vieux câble USB ?"
+            ],
+            recompense: 30
+        },
+        {
+            id: 4,
+            titre: "Test d’intelligence totalement faux",
+            description: "Ce test ne mesure rien, mais il le fait avec beaucoup de confiance.",
+            categorie: "Pseudo-science",
+            tags: ["test", "court", "fake"],
+            questions: [
+                "Combien font 1 + 1 ? (réponse honnête ou créative, au choix.)",
+                "Pourquoi as-tu choisi cette réponse ?",
+                "Penses-tu avoir réussi ce test totalement inutile ?"
+            ],
+            recompense: 10
+        }
+    ];
+
+    let coins = 0;
+    const completed = new Set();
+    let currentSurveyId = null;
+
+    const surveyListEl = document.getElementById("surveyList");
+    const surveyDetailEl = document.getElementById("surveyDetail");
+    const coinValueEl = document.getElementById("coinValue");
+    const surveyIntroEl = document.getElementById("surveyIntro");
+
+    function renderSurveyList() {
+        surveyListEl.innerHTML = "";
+        surveys.forEach(survey => {
+            const card = document.createElement("div");
+            card.className = "survey-card";
+            if (completed.has(survey.id)) {
+                card.classList.add("inactive");
+            }
+
+            card.addEventListener("click", () => {
+                if (!completed.has(survey.id)) {
+                    selectSurvey(survey.id);
+                }
+            });
+
+            const main = document.createElement("div");
+            main.className = "survey-main";
+
+            const title = document.createElement("div");
+            title.className = "survey-title";
+            title.textContent = survey.titre;
+            main.appendChild(title);
+
+            const desc = document.createElement("div");
+            desc.className = "survey-desc";
+            desc.textContent = survey.description;
+            main.appendChild(desc);
+
+            const tagsRow = document.createElement("div");
+            tagsRow.className = "tag-row";
+
+            const catTag = document.createElement("div");
+            catTag.className = "tag blue";
+            catTag.textContent = survey.categorie;
+            tagsRow.appendChild(catTag);
+
+            survey.tags.forEach(t => {
+                const tag = document.createElement("div");
+                tag.className = "tag";
+                tag.textContent = t;
+                tagsRow.appendChild(tag);
+            });
+
+            main.appendChild(tagsRow);
+
+            const meta = document.createElement("div");
+            meta.className = "survey-meta";
+
+            const reward = document.createElement("div");
+            reward.className = "reward";
+            const label = document.createElement("div");
+            label.className = "reward-label";
+            label.textContent = "Récompense";
+            const value = document.createElement("div");
+            value.className = "reward-value";
+            value.textContent = "+" + survey.recompense;
+            reward.appendChild(label);
+            reward.appendChild(value);
+
+            meta.appendChild(reward);
+
+            const status = document.createElement("div");
+            status.className = "status " + (completed.has(survey.id) ? "done" : "pending");
+            status.textContent = completed.has(survey.id) ? "Complétée" : "Disponible";
+            meta.appendChild(status);
+
+            card.appendChild(main);
+            card.appendChild(meta);
+
+            surveyListEl.appendChild(card);
+        });
+    }
+
+    function selectSurvey(id) {
+        const survey = surveys.find(s => s.id === id);
+        if (!survey) return;
+        currentSurveyId = id;
+
+        surveyIntroEl.textContent = "Tu es sur le point de participer à une étude SwanLabs classée « pas du tout sérieuse ».";
+
+        surveyDetailEl.innerHTML = "";
+
+        const title = document.createElement("div");
+        title.className = "survey-detail-title";
+        title.textContent = survey.titre;
+        surveyDetailEl.appendChild(title);
+
+        const meta = document.createElement("div");
+        meta.className = "survey-detail-meta";
+        meta.textContent = survey.description + " Catégorie : " + survey.categorie + ".";
+        surveyDetailEl.appendChild(meta);
+
+        survey.questions
