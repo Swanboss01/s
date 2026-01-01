@@ -507,4 +507,61 @@
         meta.textContent = survey.description + " Catégorie : " + survey.categorie + ".";
         surveyDetailEl.appendChild(meta);
 
-        survey.questions
+                survey.questions.forEach((q, index) => {
+            const qWrap = document.createElement("div");
+            qWrap.className = "question";
+
+            const label = document.createElement("div");
+            label.className = "question-label";
+            label.textContent = "Q" + (index + 1) + ". " + q;
+            qWrap.appendChild(label);
+
+            const input = document.createElement("textarea");
+            input.className = "question-input";
+            input.rows = 2;
+            input.placeholder = "Ta réponse hautement scientifique ici...";
+            input.dataset.qid = index;
+            qWrap.appendChild(input);
+
+            surveyDetailEl.appendChild(qWrap);
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const hint = document.createElement("div");
+        hint.className = "hint";
+        hint.textContent = "SwanLabs rappelle : tes réponses ne seront analysées par absolument personne.";
+
+        const btn = document.createElement("button");
+        btn.className = "btn btn-primary";
+        btn.textContent = "Valider l’enquête et gagner des SwanCoins";
+
+        btn.addEventListener("click", () => {
+            if (completed.has(id)) return;
+            const answers = Array.from(
+                surveyDetailEl.querySelectorAll(".question-input")
+            ).map(t => t.value.trim());
+
+            if (answers.some(a => a.length === 0)) {
+                alert("Tu dois au moins écrire quelque chose dans chaque réponse.\nMême si c’est « coin.exe ».");
+                return;
+            }
+
+            completed.add(id);
+            coins += survey.recompense;
+            coinValueEl.textContent = coins.toString();
+
+            btn.disabled = true;
+            btn.textContent = "Enquête validée ✔";
+
+            renderSurveyList();
+        });
+
+        actions.appendChild(hint);
+        actions.appendChild(btn);
+        surveyDetailEl.appendChild(actions);
+    }
+
+    renderSurveyList();
+</script>
